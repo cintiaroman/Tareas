@@ -52,23 +52,23 @@ function agregarTarea(tarea, id, hecho, eliminar) {
     const realizado = hecho ? check : uncheck;
     const LINE = hecho ? tachado : '';
     const elemento = ` <li id="elemento">
-    <i id="${id}" class="bi ${realizado}"></i>
+    <i id="${id}" data="hecho" class="bi ${realizado}"></i>
     <p class="tarea-lista text ${LINE}">${tarea}</p>
     <i id="${id}" data="eliminar" class="bi bi-x"></i>
 </li> `
     lista.insertAdjacentHTML("beforeend", elemento);
 };
 
-function tareaRealizada(eLement) {
-    eLement.classlist.toggle(check);
-    eLement.classlist.toggle(uncheck);
-    eLement.parentNode.querySelector('.text').classlist.toggle(tachado);
-    LIST[element.id].realizado = LIST[element.id].realizado ? false : true;
+function tareaRealizada(element) {
+    element.classlist.toggle(check);
+    element.classlist.toggle(uncheck);
+    element.parentNode.querySelector('.text').classlist.toggle(tachado);
+    LIST[element.id].realizado = LIST[element.id].realizado ?false :true;
 };
 
-function tareaEliminada(eLement) {
-    eLement.parentNode.parentNode.removeChild(eLement.parentNode);
-    LIST[eLement.id].eliminar = true;
+function tareaEliminada(element) {
+    element.parentNode.parentNode.removeChild(element.parentNode);
+    LIST[element.id].eliminar = true;
 };
 
 botonAgregar.addEventListener("click", () => {
@@ -95,9 +95,8 @@ lista.addEventListener("click", function (event) {
     } else if (elementData == "eliminar") {
         tareaEliminada(element);
     };
-    localStorage, setItem("TODO", JSON.stringify(LIST));
+    localStorage.setItem("TODO", JSON.stringify(LIST));
 });
-
 
 let data = localStorage.getItem("TODO");
 if (data) {
@@ -108,7 +107,6 @@ if (data) {
     LIST = [];
     id = 0;
 };
-
 
 function cargarLista(array) {
     array.forEach(
